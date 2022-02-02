@@ -2,6 +2,8 @@ package br.com.alura.agenda.model;
 
 import android.text.Editable;
 
+import androidx.annotation.NonNull;
+
 public class Aluno {
 
     public Aluno(String nome, String telefone, String email) {
@@ -28,5 +30,9 @@ public class Aluno {
 
     private String email;
 
-
+    @NonNull
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
