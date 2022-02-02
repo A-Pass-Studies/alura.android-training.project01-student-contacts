@@ -1,7 +1,9 @@
 package br.com.alura.agenda;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Lista de alunos");
 
         ArrayList<String> alunos = new ArrayList<>(Arrays.asList("Anderson", "Laila", "Dina", "Maria", "Marcos"));
 
