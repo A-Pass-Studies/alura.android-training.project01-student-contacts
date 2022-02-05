@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -28,12 +30,23 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private FloatingActionButton fabAdicionaAluno;
 
+    /**
+     * Cadastra alguns alunos para testes.
+     */
+    private void mockAlunos() {
+        alunoDAO.salva(new Aluno("Jão", "1234455678", "joao@email.com"));
+        alunoDAO.salva(new Aluno("Maria", "1234455678", "joao@email.com"));
+        alunoDAO.salva(new Aluno("Jose", "1234455678", "joao@email.com"));
+        alunoDAO.salva(new Aluno("mateus", "1234455678", "joao@email.com"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Lista de alunos");
         setContentView(R.layout.activity_lista_alunos);
         initViews();
+        mockAlunos();
     }
 
     @Override
@@ -47,9 +60,14 @@ public class ListaAlunoActivity extends AppCompatActivity {
         alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
         alunosListVw.setAdapter(
                 new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+        alunosListVw.setOnItemClickListener(this::onAlunoClick);
 
         fabAdicionaAluno = findViewById(R.id.activity_lista_alunos_fab_adiciona_aluno);
         fabAdicionaAluno.setOnClickListener(this::onBtnAdicionaAluno);
+    }
+
+    private void onAlunoClick(AdapterView<?> adapterView, View view, int posicao, long id) {
+        Log.i("lista_aluno", "posição: " + posicao);
     }
 
     private void onBtnAdicionaAluno(View view) {
