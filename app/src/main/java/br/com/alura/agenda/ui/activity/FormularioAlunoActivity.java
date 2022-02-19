@@ -15,6 +15,7 @@ import br.com.alura.agenda.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
+    static String BUNDLE_ALUNO = "BUNDLE_ALUNO";
     private EditText edtNome;
     private EditText edtTelefone;
     private EditText edtEmail;
@@ -27,19 +28,30 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Novo aluno");
         setContentView(R.layout.activity_formulario_aluno);
-
         initViews();
+    }
+
+    private void setupBundles() {
+        if(getIntent().hasExtra(BUNDLE_ALUNO)) {
+            Aluno aluno = (Aluno) getIntent().getSerializableExtra(BUNDLE_ALUNO);
+            setFieldsValuesBy(aluno);
+        }
+    }
+
+    private void setFieldsValuesBy(Aluno aluno) {
+        edtNome.setText(aluno.getNome());
+        edtEmail.setText(aluno.getEmail());
+        edtTelefone.setText(aluno.getTelefone());
     }
 
     private void initViews() {
         edtNome = findViewById(R.id.activity_formulario_aluno_nome);
-
         edtTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
-
         edtEmail = findViewById(R.id.activity_formulario_aluno_email);
-
         btnSalvar = findViewById(R.id.activity_formulario_aluno_btn_salvar);
         btnSalvar.setOnClickListener(this::onClickBtnSalvar);
+
+        setupBundles();
     }
 
     private void onClickBtnSalvar(View view) {

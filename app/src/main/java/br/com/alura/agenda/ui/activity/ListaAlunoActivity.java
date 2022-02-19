@@ -67,7 +67,12 @@ public class ListaAlunoActivity extends AppCompatActivity {
     }
 
     private void onAlunoClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-        Log.i("lista_aluno", "posição: " + posicao);
+        Log.i("lista_aluno", "clique no aluno de posição: " + posicao);
+
+        startActivity(
+                new Intent(this, FormularioAlunoActivity.class)
+                        .putExtra(FormularioAlunoActivity.BUNDLE_ALUNO, alunos.get(posicao)));
+
     }
 
     private void onBtnAdicionaAluno(View view) {
