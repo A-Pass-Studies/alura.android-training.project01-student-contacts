@@ -14,7 +14,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        mockAlunos();
+        for(int i =0; i < 10; i++)
+            mockAlunos();
     }
 
     private void mockAlunos() {
