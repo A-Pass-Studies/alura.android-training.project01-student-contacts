@@ -24,11 +24,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
 
-    private ListView alunosListVw;
-
     private ArrayAdapter alunosListVwAdapter;
-
-    private FloatingActionButton fabAdicionaAluno;
 
     /**
      * Cadastra alguns alunos para testes.
@@ -54,12 +50,12 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
         setupAlunosListView();
 
-        fabAdicionaAluno = findViewById(R.id.activity_lista_alunos_fab_adiciona_aluno);
+        FloatingActionButton fabAdicionaAluno = findViewById(R.id.activity_lista_alunos_fab_adiciona_aluno);
         fabAdicionaAluno.setOnClickListener(this::onBtnAdicionaAluno);
     }
 
     private void setupAlunosListView() {
-        alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
+        ListView alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
         alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         alunosListVw.setAdapter(alunosListVwAdapter);
         alunosListVw.setOnItemClickListener(this::onAlunoClick);
