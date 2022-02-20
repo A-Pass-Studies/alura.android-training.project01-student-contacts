@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText edtNome;
     private EditText edtTelefone;
     private EditText edtEmail;
-    private Button btnSalvar;
 
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
     private Aluno alunoToEdit;
@@ -30,6 +31,24 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setTitle((isEditMode() ? "Atualiza" : "Novo") + " Aluno");
         setContentView(R.layout.activity_formulario_aluno);
         initViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.activity_formulario_aluno_menu_salva:
+                finalizaFormaulario();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean isEditMode() {
@@ -53,13 +72,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         edtNome = findViewById(R.id.activity_formulario_aluno_nome);
         edtTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
         edtEmail = findViewById(R.id.activity_formulario_aluno_email);
-        btnSalvar = findViewById(R.id.activity_formulario_aluno_btn_salvar);
-        btnSalvar.setOnClickListener(this::onClickBtnSalvar);
 
         setupBundles();
     }
 
-    private void onClickBtnSalvar(View view) {
+    private void finalizaFormaulario() {
         if(alunoToEdit == null) {
             alunoDAO.salva(new Aluno(getNome(), getTelefone(), getEmail()));
         } else  {
