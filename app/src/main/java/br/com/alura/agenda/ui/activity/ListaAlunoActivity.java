@@ -24,9 +24,9 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
 
-    private List<Aluno> alunos = new ArrayList();
-
     private ListView alunosListVw;
+
+    private ArrayAdapter alunosListVwAdapter;
 
     private FloatingActionButton fabAdicionaAluno;
 
@@ -46,18 +46,31 @@ public class ListaAlunoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        alunos.clear();
-        alunos.addAll(alunoDAO.getAll());
+        alunosListVwAdapter.clear();
+        alunosListVwAdapter.addAll(alunoDAO.getAll());
     }
 
     private void initViews() {
-        alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
-        alunosListVw.setAdapter(
-                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
-        alunosListVw.setOnItemClickListener(this::onAlunoClick);
+
+        setupAlunosListView();
 
         fabAdicionaAluno = findViewById(R.id.activity_lista_alunos_fab_adiciona_aluno);
         fabAdicionaAluno.setOnClickListener(this::onBtnAdicionaAluno);
+    }
+
+    private void setupAlunosListView() {
+        alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
+        alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunoDAO.getAll());
+        alunosListVw.setAdapter(alunosListVwAdapter);
+        alunosListVw.setOnItemClickListener(this::onAlunoClick);
+        alunosListVw.setOnItemLongClickListener(this::onAlunoLongClick);
+    }
+
+    private boolean onAlunoLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Aluno aluno = (Aluno) adapterView.getItemAtPosition(position);
+        alunoDAO.remove(aluno);
+        alunosListVwAdapter.remove(aluno);
+        return true;
     }
 
     private void onAlunoClick(AdapterView<?> adapterView, View view, int posicao, long id) {

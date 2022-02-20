@@ -9,6 +9,10 @@ public interface AlunoDAO {
 
     void edita(Aluno aluno);
 
+    void remove(Aluno aluno);
+
+    Aluno getById(int id);
+
     List<Aluno> getAll();
 
 }

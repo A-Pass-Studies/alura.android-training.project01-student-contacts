@@ -19,10 +19,27 @@ public class AlunoDAOImpl implements AlunoDAO {
 
     @Override
     public void edita(Aluno aluno) {
-        for (Aluno alunoSalvo: alunos) {
-            if(alunoSalvo.getId() == aluno.getId()) {
-                alunos.set(alunos.indexOf(alunoSalvo), aluno);
+        Aluno alunoSalvo = getById(aluno.getId());
+        if(alunoSalvo != null)  {
+            alunos.set(alunos.indexOf(alunoSalvo), aluno);
+        }
+    }
+
+    @Override
+    public Aluno getById(int id) {
+        for (Aluno aluno: alunos) {
+            if(aluno.getId() == id) {
+                return aluno;
             }
+        }
+        return null;
+    }
+
+    @Override
+    public void remove(Aluno aluno) {
+        Aluno alunoSalvo = getById(aluno.getId());
+        if(alunoSalvo != null) {
+            alunos.remove(alunoSalvo);
         }
     }
 
