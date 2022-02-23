@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,12 +24,13 @@ import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.dao.AlunoDAOImpl;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunoActivity extends AppCompatActivity {
 
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
 
-    private ArrayAdapter alunosListVwAdapter;
+    private ListaAlunosAdapter alunosListVwAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private void setupAlunosListView() {
         ListView alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
-        alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        alunosListVwAdapter = new ListaAlunosAdapter();
         alunosListVw.setAdapter(alunosListVwAdapter);
         alunosListVw.setOnItemClickListener(this::onAlunoClick);
         registerForContextMenu(alunosListVw);

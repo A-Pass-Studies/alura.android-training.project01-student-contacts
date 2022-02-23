@@ -20,6 +20,7 @@ public class Aluno implements Serializable {
         this.email = email;
     }
 
+
     public int getId() {
         return id;
     }
