@@ -43,8 +43,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        alunosListVwAdapter.clear();
-        alunosListVwAdapter.addAll(alunoDAO.getAll());
+        alunosListVwAdapter.atualiza(alunoDAO.getAll());
     }
 
     @Override

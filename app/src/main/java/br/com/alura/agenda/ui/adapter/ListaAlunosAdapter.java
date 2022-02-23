@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(int position, View view, @NonNull ViewGroup viewGroup) {
         View vw = LayoutInflater
                 .from(viewGroup.getContext())
                 .inflate(R.layout.item_aluno, viewGroup, false);
@@ -46,15 +48,14 @@ public class ListaAlunosAdapter extends BaseAdapter {
         return vw;
     }
 
-    public void clear() {
-        alunos.clear();
-    }
-
-    public void addAll(List<Aluno> alunos) {
+    public void atualiza(List<Aluno> alunos) {
+        this.alunos.clear();
         this.alunos.addAll(alunos);
+        notifyDataSetChanged();
     }
 
     public void remove(Aluno aluno) {
         alunos.remove(aluno);
+        notifyDataSetChanged();
     }
 }
