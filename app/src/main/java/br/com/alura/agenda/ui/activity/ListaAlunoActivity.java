@@ -30,6 +30,8 @@ import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunoActivity extends AppCompatActivity {
 
+    private static final int LISTA_ALUNO_MENU_REMOVE = R.id.activity_lista_aluno_menu_remove;
+
     private final AlunoDAO alunoDAO = new AlunoDAOImpl();
 
     private ListaAlunosAdapter alunosListVwAdapter;
@@ -57,7 +59,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.activity_lista_aluno_menu_remove:
+            case LISTA_ALUNO_MENU_REMOVE:
                 setupRemoveConfirmationDialog(item);
                 break;
         }
