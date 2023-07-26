@@ -24,6 +24,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
     private Aluno alunoToEdit;
 
+    private final static int FORMULARIO_ALUNO_MENU = R.id.activity_formulario_aluno_menu_salva;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.activity_formulario_aluno_menu_salva:
+            case FORMULARIO_ALUNO_MENU:
                 finalizaFormaulario();
                 break;
         }
