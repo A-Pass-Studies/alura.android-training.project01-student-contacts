@@ -1,4 +1,4 @@
-package br.com.alura.agenda.model;
+package apass.studies.alura.androidtraining.project01studentcontacts.model;
 
 import androidx.annotation.NonNull;
 

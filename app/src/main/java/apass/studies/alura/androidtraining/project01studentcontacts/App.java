@@ -1,10 +1,10 @@
-package br.com.alura.agenda;
+package apass.studies.alura.androidtraining.project01studentcontacts;
 
 import android.app.Application;
 
-import br.com.alura.agenda.dao.AlunoDAO;
-import br.com.alura.agenda.dao.AlunoDAOImpl;
-import br.com.alura.agenda.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAO;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAOImpl;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
 
 public class App extends Application {
 

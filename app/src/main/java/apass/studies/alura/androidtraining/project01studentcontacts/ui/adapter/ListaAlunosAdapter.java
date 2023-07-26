@@ -1,6 +1,5 @@
-package br.com.alura.agenda.ui.adapter;
+package apass.studies.alura.androidtraining.project01studentcontacts.ui.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,8 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.alura.agenda.R;
-import br.com.alura.agenda.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.R;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
 
 public class ListaAlunosAdapter extends BaseAdapter {
 

@@ -1,4 +1,4 @@
-package br.com.alura.agenda.ui.activity;
+package apass.studies.alura.androidtraining.project01studentcontacts.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,10 +9,10 @@ import android.view.MenuItem;
 
 import android.widget.EditText;
 
-import br.com.alura.agenda.R;
-import br.com.alura.agenda.dao.AlunoDAO;
-import br.com.alura.agenda.dao.AlunoDAOImpl;
-import br.com.alura.agenda.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.R;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAO;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAOImpl;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 

@@ -1,8 +1,8 @@
-package br.com.alura.agenda.dao;
+package apass.studies.alura.androidtraining.project01studentcontacts.dao;
 
 import java.util.List;
 
-import br.com.alura.agenda.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
 
 public interface AlunoDAO {
     void salva(Aluno aluno);

@@ -1,4 +1,4 @@
-package br.com.alura.agenda;
+package apass.studies.alura.androidtraining.project01studentcontacts;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("br.com.alura.agenda", appContext.getPackageName());
+        assertEquals("apass.studies.alura.androidtraining.project01studentcontacts", appContext.getPackageName());
     }
 }

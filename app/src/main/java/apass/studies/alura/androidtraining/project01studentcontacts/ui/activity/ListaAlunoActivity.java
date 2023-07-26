@@ -1,7 +1,4 @@
-package br.com.alura.agenda.ui.activity;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package apass.studies.alura.androidtraining.project01studentcontacts.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,22 +8,19 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.alura.agenda.R;
-import br.com.alura.agenda.dao.AlunoDAO;
-import br.com.alura.agenda.dao.AlunoDAOImpl;
-import br.com.alura.agenda.model.Aluno;
-import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
+import apass.studies.alura.androidtraining.project01studentcontacts.R;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAO;
+import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAOImpl;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunoActivity extends AppCompatActivity {
 

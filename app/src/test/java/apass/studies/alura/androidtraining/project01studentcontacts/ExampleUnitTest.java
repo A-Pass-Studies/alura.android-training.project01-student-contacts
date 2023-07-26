@@ -1,4 +1,4 @@
-package br.com.alura.agenda;
+package apass.studies.alura.androidtraining.project01studentcontacts;
 
 import org.junit.Test;
 
