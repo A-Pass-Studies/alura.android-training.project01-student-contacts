@@ -2,7 +2,15 @@ package br.com.alura.agenda.model;
 
 import androidx.annotation.NonNull;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
+
+    private String nome;
+
+    private String telefone;
+
+    private String email;
 
     public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
@@ -10,11 +18,17 @@ public class Aluno {
         this.email = email;
     }
 
-    private String nome;
+    public String getNome() {
+        return nome;
+    }
 
-    private String telefone;
+    public String getTelefone() {
+        return telefone;
+    }
 
-    private String email;
+    public String getEmail() {
+        return email;
+    }
 
     @NonNull
     @Override
