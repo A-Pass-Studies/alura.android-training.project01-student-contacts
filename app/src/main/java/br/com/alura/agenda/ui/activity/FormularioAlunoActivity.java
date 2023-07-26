@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +22,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private Button btnSalvar;
 
     private AlunoDAO alunoDAO = new AlunoDAOImpl();
-    private Aluno aluno;
+    private Aluno alunoToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +34,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void setupBundles() {
         if(getIntent().hasExtra(BUNDLE_ALUNO)) {
-            aluno = (Aluno) getIntent().getSerializableExtra(BUNDLE_ALUNO);
-            setFieldsValuesBy(aluno);
+            alunoToEdit = (Aluno) getIntent().getSerializableExtra(BUNDLE_ALUNO);
+            setFieldsValuesBy(alunoToEdit);
         }
     }
 
@@ -57,13 +56,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void onClickBtnSalvar(View view) {
-        if(aluno == null) {
+        if(alunoToEdit == null) {
             alunoDAO.salva(new Aluno(getNome(), getTelefone(), getEmail()));
         } else  {
-            aluno.setEmail(getEmail());
-            aluno.setNome(getNome());
-            aluno.setTelefone(getTelefone());
-            alunoDAO.edita(aluno);
+            alunoToEdit.setEmail(getEmail());
+            alunoToEdit.setNome(getNome());
+            alunoToEdit.setTelefone(getTelefone());
+            alunoDAO.edita(alunoToEdit);
         }
         finish();
     }
