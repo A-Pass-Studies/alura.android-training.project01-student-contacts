@@ -1,12 +1,16 @@
 package apass.studies.alura.androidtraining.project01studentcontacts.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity
 public class Aluno implements Serializable {
 
-    private int id = 0;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
     private String nome;
 
