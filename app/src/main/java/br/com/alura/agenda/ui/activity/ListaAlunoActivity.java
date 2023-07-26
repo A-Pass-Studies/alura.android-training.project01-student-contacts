@@ -60,7 +60,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private void setupAlunosListView() {
         alunosListVw = findViewById(R.id.activity_lista_alunos_listview);
-        alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunoDAO.getAll());
+        alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         alunosListVw.setAdapter(alunosListVwAdapter);
         alunosListVw.setOnItemClickListener(this::onAlunoClick);
         alunosListVw.setOnItemLongClickListener(this::onAlunoLongClick);
