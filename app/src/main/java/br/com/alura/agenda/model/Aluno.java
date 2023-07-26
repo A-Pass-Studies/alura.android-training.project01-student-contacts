@@ -1,7 +1,5 @@
 package br.com.alura.agenda.model;
 
-import android.text.Editable;
-
 import androidx.annotation.NonNull;
 
 public class Aluno {
@@ -10,18 +8,6 @@ public class Aluno {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     private String nome;
