@@ -65,7 +65,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
         startActivity(
                 new Intent(this, FormularioAlunoActivity.class)
-                        .putExtra(FormularioAlunoActivity.BUNDLE_ALUNO, alunos.get(posicao)));
+                        .putExtra(FormularioAlunoActivity.BUNDLE_ALUNO_TO_EDIT, (Aluno) adapterView.getItemAtPosition(posicao)));
 
     }
 
