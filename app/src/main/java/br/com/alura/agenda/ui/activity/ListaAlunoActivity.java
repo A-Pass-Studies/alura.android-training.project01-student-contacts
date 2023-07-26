@@ -1,10 +1,13 @@
 package br.com.alura.agenda.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,11 +29,6 @@ public class ListaAlunoActivity extends AppCompatActivity {
 
     private ArrayAdapter alunosListVwAdapter;
 
-    /**
-     * Cadastra alguns alunos para testes.
-     */
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +44,21 @@ public class ListaAlunoActivity extends AppCompatActivity {
         alunosListVwAdapter.addAll(alunoDAO.getAll());
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remove");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Aluno aluno = (Aluno) alunosListVwAdapter.getItem(adapterInfo.position);
+        alunoDAO.remove(aluno);
+        alunosListVwAdapter.remove(aluno);
+        return super.onContextItemSelected(item);
+    }
+
     private void initViews() {
 
         setupAlunosListView();
@@ -59,14 +72,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
         alunosListVwAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         alunosListVw.setAdapter(alunosListVwAdapter);
         alunosListVw.setOnItemClickListener(this::onAlunoClick);
-        alunosListVw.setOnItemLongClickListener(this::onAlunoLongClick);
-    }
-
-    private boolean onAlunoLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Aluno aluno = (Aluno) adapterView.getItemAtPosition(position);
-        alunoDAO.remove(aluno);
-        alunosListVwAdapter.remove(aluno);
-        return true;
+        registerForContextMenu(alunosListVw);
     }
 
     private void onAlunoClick(AdapterView<?> adapterView, View view, int posicao, long id) {
