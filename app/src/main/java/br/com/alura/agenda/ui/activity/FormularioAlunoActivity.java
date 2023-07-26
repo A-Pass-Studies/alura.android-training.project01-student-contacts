@@ -1,7 +1,9 @@
 package br.com.alura.agenda.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.dao.AlunoDAO;
+import br.com.alura.agenda.dao.AlunoDAOImpl;
 import br.com.alura.agenda.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
@@ -17,6 +21,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText edtTelefone;
     private EditText edtEmail;
     private Button btnSalvar;
+
+    private AlunoDAO alunoDAO = new AlunoDAOImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +44,21 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void onClickBtnSalvar(View view) {
-        Aluno alunoCriado = new Aluno(getNome(), getTelefone(), getEmail());
-        Toast.makeText(
-                this,
-                "Nome: " + alunoCriado.getNome() +
-                "\nTelefone: " + alunoCriado.getTelefone() +
-                "\nE-mail: " + alunoCriado.getEmail(),
-                Toast.LENGTH_LONG)
-        .show();
+        alunoDAO.salva(new Aluno(getNome(), getTelefone(), getEmail()));
+        finish();
     }
 
+    @NonNull
     private String getNome() {
         return edtNome.getText().toString();
     }
 
+    @NonNull
     private String getTelefone() {
         return edtTelefone.getText().toString();
     }
 
+    @NonNull
     private String getEmail() {
         return edtEmail.getText().toString();
     }
