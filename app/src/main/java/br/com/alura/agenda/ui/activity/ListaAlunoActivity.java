@@ -33,12 +33,7 @@ public class ListaAlunoActivity extends AppCompatActivity {
     /**
      * Cadastra alguns alunos para testes.
      */
-    private void mockAlunos() {
-        alunoDAO.salva(new Aluno("Jão", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("Maria", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("Jose", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("mateus", "1234455678", "joao@email.com"));
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,6 @@ public class ListaAlunoActivity extends AppCompatActivity {
         setTitle("Lista de alunos");
         setContentView(R.layout.activity_lista_alunos);
         initViews();
-        mockAlunos();
     }
 
     @Override

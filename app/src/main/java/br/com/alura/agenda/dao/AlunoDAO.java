@@ -7,5 +7,8 @@ import br.com.alura.agenda.model.Aluno;
 public interface AlunoDAO {
     void salva(Aluno aluno);
 
+    void edita(Aluno aluno);
+
     List<Aluno> getAll();
+
 }
