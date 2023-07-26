@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-anydpi/ic_action_adiciona_aluno.xml" value="0.268" />
-        <entry key="app/src/main/res/layout/activity_formulario_aluno.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/activity_formulario_aluno.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_lista_alunos.xml" value="0.2640625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_aluno.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/menu/activity_formulario_aluno_menu.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/menu/activity_lista_aluno_menu.xml" value="0.2640625" />
       </map>
     </option>
   </component>
