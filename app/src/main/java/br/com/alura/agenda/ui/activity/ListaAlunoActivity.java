@@ -3,6 +3,8 @@ package br.com.alura.agenda.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,7 @@ import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunoActivity extends AppCompatActivity {
 
-    private AlunoDAO alunoDAO = new AlunoDAOImpl();
+    private final AlunoDAO alunoDAO = new AlunoDAOImpl();
 
     private ListaAlunosAdapter alunosListVwAdapter;
 
@@ -56,14 +58,28 @@ public class ListaAlunoActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.activity_lista_aluno_menu_remove:
-                AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                Aluno aluno = (Aluno) alunosListVwAdapter.getItem(adapterInfo.position);
-                alunoDAO.remove(aluno);
-                alunosListVwAdapter.remove(aluno);
+                setupRemoveConfirmationDialog(item);
                 break;
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    private void setupRemoveConfirmationDialog(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Aluno aluno = (Aluno) alunosListVwAdapter.getItem(adapterInfo.position);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Removendo o aluno")
+                .setMessage("Tem certeza eu deseja remover o aluno " + aluno.getNome() + "?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        alunoDAO.remove(aluno);
+                        alunosListVwAdapter.remove(aluno);
+                    }
+                })
+                .setNegativeButton("Não", null).create();
+        dialog.show();
     }
 
     private void initViews() {
