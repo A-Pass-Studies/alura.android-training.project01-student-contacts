@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Agenda">
 
         <activity
-            android:name="apass.studies.alura.androidtraining.project01studentcontacts.ui.activity.ListaAlunoActivity"
+            android:name="apass.studies.alura.androidtraining.project01studentcontacts.ui.student.listing.StudentListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name="apass.studies.alura.androidtraining.project01studentcontacts.ui.activity.FormularioAlunoActivity"
+            android:name="apass.studies.alura.androidtraining.project01studentcontacts.ui.student.StudentFormActivity"
             android:exported="false">
         </activity>
     </application>

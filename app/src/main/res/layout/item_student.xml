@@ -6,14 +6,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/item_aluno_nome"
+        android:id="@+id/item_student_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        tools:text="João José"/>
+        tools:text="John Silva"/>
 
     <TextView
-        android:id="@+id/item_aluno_telefone"
+        android:id="@+id/item_student_phone_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"

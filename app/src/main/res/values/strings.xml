@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">Agenda</string>
-    <string name="add_aluno_fab_description">Adicionar novo aluno</string>
-    <string name="telefone">Telefone</string>
+    <string name="add_student_fab_description">Adicionar novo aluno</string>
+    <string name="phone">Telefone</string>
     <string name="email">E-mail</string>
     <string name="nome">Nome</string>
-    <string name="salvar_aluno">Salvar aluno</string>
+    <string name="save_student">Salvar aluno</string>
     <string name="remover">Remover</string>
+    <string name="student_form_update_title">Atualiza aluno</string>
+    <string name="student_form_new_title">Novo aluno</string>
+    <string name="activity_student_listing_title">Lista de alunos</string>
+    <string name="dialog_confirmation_of_remove_student_title">Removendo o student</string>
+    <string name="message_dialog_remove_student">Tem certeza eu deseja remover o aluno %s \\?</string>
+    <string name="yes">Sim</string>
+    <string name="not">Não</string>
 </resources>

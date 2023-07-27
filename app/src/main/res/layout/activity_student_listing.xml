@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_lista_alunos_fab_adiciona_aluno"
+        android:id="@+id/activity_student_listing_add_student_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -15,11 +15,11 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_action_adiciona_aluno"
-        android:contentDescription="@string/add_aluno_fab_description"/>
+        android:src="@drawable/ic_action_add_student"
+        android:contentDescription="@string/add_student_fab_description"/>
 
     <ListView
-        android:id="@+id/activity_lista_alunos_listview"
+        android:id="@+id/activity_student_listing_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

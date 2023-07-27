@@ -7,20 +7,20 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class Aluno implements Serializable {
+public class Student implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String nome;
+    private String name;
 
-    private String telefone;
+    private String phone;
 
     private String email;
 
-    public Aluno(String nome, String telefone, String email) {
-        this.nome = nome;
-        this.telefone = telefone;
+    public Student(String name, String phone, String email) {
+        this.name = name;
+        this.phone = phone;
         this.email = email;
     }
 
@@ -29,28 +29,28 @@ public class Aluno implements Serializable {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getPhone() {
+        return phone;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setEmail(String email) {
@@ -60,6 +60,6 @@ public class Aluno implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return nome;
+        return name;
     }
 }

@@ -2,25 +2,27 @@ package apass.studies.alura.androidtraining.project01studentcontacts;
 
 import android.app.Application;
 
-import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAO;
-import apass.studies.alura.androidtraining.project01studentcontacts.dao.AlunoDAOImpl;
-import apass.studies.alura.androidtraining.project01studentcontacts.model.Aluno;
+import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
+import apass.studies.alura.androidtraining.project01studentcontacts.data.database.StudentContactsDatabase;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Student;
 
 public class App extends Application {
 
-    private AlunoDAO alunoDAO = new AlunoDAOImpl();
+    private StudentDao studentDao;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mockAlunos();
+        studentDao = StudentContactsDatabase.getInstance(this.getApplicationContext()).getStudentDao();
+
+        mockStudents();
     }
 
-    private void mockAlunos() {
-        alunoDAO.salva(new Aluno("Jão", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("Maria", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("Jose", "1234455678", "joao@email.com"));
-        alunoDAO.salva(new Aluno("mateus", "1234455678", "joao@email.com"));
+    private void mockStudents() {
+        studentDao.insert(new Student("Jão", "1234455678", "joao@email.com"));
+        studentDao.insert(new Student("Maria", "1234455678", "joao@email.com"));
+        studentDao.insert(new Student("Jose", "1234455678", "joao@email.com"));
+        studentDao.insert(new Student("mateus", "1234455678", "joao@email.com"));
     }
 }
