@@ -3,7 +3,7 @@
     <string name="add_student_fab_description">Adicionar novo aluno</string>
     <string name="phone">Telefone</string>
     <string name="email">E-mail</string>
-    <string name="nome">Nome</string>
+    <string name="field_name_hint">Nome</string>
     <string name="save_student">Salvar aluno</string>
     <string name="remover">Remover</string>
     <string name="student_form_update_title">Atualiza aluno</string>
@@ -13,4 +13,5 @@
     <string name="message_dialog_remove_student">Tem certeza eu deseja remover o aluno %s \\?</string>
     <string name="yes">Sim</string>
     <string name="not">Não</string>
+    <string name="field_lastname_hint">Ultimo nome</string>
 </resources>

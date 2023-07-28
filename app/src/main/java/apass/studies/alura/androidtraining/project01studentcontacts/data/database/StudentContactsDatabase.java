@@ -1,15 +1,20 @@
 package apass.studies.alura.androidtraining.project01studentcontacts.data.database;
 
+import static apass.studies.alura.androidtraining.project01studentcontacts.data.database.Migrations.migrate_00001_00002;
+
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
+
+import java.util.List;
 
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.model.Student;
 
-@Database(entities = {Student.class}, version = 1, exportSchema = false)
+@Database(entities = {Student.class}, version = 2, exportSchema = false)
 public abstract class StudentContactsDatabase extends RoomDatabase {
     private static StudentContactsDatabase instance;
 
@@ -19,7 +24,9 @@ public abstract class StudentContactsDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room.databaseBuilder(context, StudentContactsDatabase.class, "project01studentcontacts")
                     .allowMainThreadQueries() // TODO: remove, implement assync
-                    .fallbackToDestructiveMigration() // TODO: remove to prod
+                    .addMigrations(
+                            migrate_00001_00002()
+                    )
                     .build();
         }
 

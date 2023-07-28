@@ -18,6 +18,8 @@ public class StudentFormActivity extends AppCompatActivity {
 
     public static final String BUNDLE_STUDENT_TO_EDIT = "BUNDLE_STUDENT";
     private EditText nameEdt;
+
+    private EditText lastnameEdt;
     private EditText phoneEdt;
     private EditText emailEdt;
 
@@ -62,12 +64,14 @@ public class StudentFormActivity extends AppCompatActivity {
 
     private void setFieldsValuesBy(Student student) {
         nameEdt.setText(student.getName());
+        lastnameEdt.setText(student.getLastName());
         emailEdt.setText(student.getEmail());
         phoneEdt.setText(student.getPhone());
     }
 
     private void initViews() {
         nameEdt = findViewById(R.id.activity_student_form_name_edt);
+        lastnameEdt = findViewById(R.id.activity_student_form_lastname_edt);
         phoneEdt = findViewById(R.id.activity_student_form_phone_etd);
         emailEdt = findViewById(R.id.activity_student_form_email_edt);
 
@@ -76,14 +80,19 @@ public class StudentFormActivity extends AppCompatActivity {
 
     private void finishForm() {
         if(studentToEdit == null) {
-            studentDao.insert(new Student(getNameFieldValue(), getPhoneFieldValue(), getEmailFieldValue()));
+            studentDao.insert(new Student(getNameFieldValue(), getPhoneFieldValue(), getEmailFieldValue(), getLastnameFieldValue()));
         } else  {
             studentToEdit.setEmail(getEmailFieldValue());
             studentToEdit.setName(getNameFieldValue());
             studentToEdit.setPhone(getPhoneFieldValue());
+            studentToEdit.setLastName(getLastnameFieldValue());
             studentDao.update(studentToEdit);
         }
         finish();
+    }
+
+    private String getLastnameFieldValue() {
+        return lastnameEdt.getText().toString();
     }
 
     @NonNull
