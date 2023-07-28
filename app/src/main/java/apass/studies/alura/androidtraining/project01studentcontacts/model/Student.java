@@ -1,10 +1,13 @@
 package apass.studies.alura.androidtraining.project01studentcontacts.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Entity
 public class Student implements Serializable {
@@ -16,10 +19,14 @@ public class Student implements Serializable {
 
     private String email;
 
+    @Nullable
+    private Calendar createdAt;
+
     public Student(final String name, final String phone, final String email) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.createdAt = Calendar.getInstance();
     }
 
     public int getId() {
@@ -58,5 +65,17 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(@Nullable final Calendar createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getFormattedCreatedAt() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(createdAt.getTime());
     }
 }

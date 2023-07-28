@@ -40,4 +40,22 @@ final class Migrations {
             }
         };
     }
+
+    static Migration migrate_00003_00004() {
+        return new Migration(3, 4) {
+            @Override
+            public void migrate(@NonNull SupportSQLiteDatabase db) {
+                db.execSQL("CREATE TABLE `StudentTmp` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`name` TEXT, " +
+                        "`phone` TEXT, " +
+                        "`email` TEXT," +
+                        "`createdAt` INTEGER)");
+                db.execSQL("INSERT INTO StudentTmp(id, name, phone, email, createdAt)" +
+                        "SELECT id, name, phone, email, null FROM Student");
+                db.execSQL("DROP TABLE Student");
+                db.execSQL("ALTER TABLE StudentTmp RENAME TO Student");
+            }
+        };
+    }
 }
