@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Entity
 public class Student implements Serializable {
 
-    private String lastName;
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
@@ -17,13 +16,11 @@ public class Student implements Serializable {
 
     private String email;
 
-    public Student(final String name, final String phone, final String email, final String lastName) {
+    public Student(final String name, final String phone, final String email) {
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.lastName = lastName;
     }
-
 
     public int getId() {
         return id;
@@ -57,18 +54,9 @@ public class Student implements Serializable {
         this.email = email;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
-    }
     @NonNull
     @Override
     public String toString() {
         return name;
     }
-
-
 }
