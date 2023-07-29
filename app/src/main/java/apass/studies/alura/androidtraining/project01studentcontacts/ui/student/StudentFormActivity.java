@@ -1,17 +1,21 @@
 package apass.studies.alura.androidtraining.project01studentcontacts.ui.student;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.List;
+
 import apass.studies.alura.androidtraining.project01studentcontacts.R;
+import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.PhoneDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.database.StudentContactsDatabase;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.Phone;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.PhoneType;
 import apass.studies.alura.androidtraining.project01studentcontacts.model.Student;
 
 public class StudentFormActivity extends AppCompatActivity {
@@ -23,16 +27,22 @@ public class StudentFormActivity extends AppCompatActivity {
     private EditText emailEdt;
 
     private StudentDao studentDao = null;
+
+    private PhoneDao phoneDao = null;
     private Student studentToEdit;
+    private List<Phone> phonesOfstudentToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        studentDao = StudentContactsDatabase.getInstance(getApplicationContext()).getStudentDao();
+
+        studentDao = StudentContactsDatabase.getInstance(this).getStudentDao();
+        phoneDao = StudentContactsDatabase.getInstance(this).getPhoneDao();
 
         setTitle((isEditMode() ? getString(R.string.student_form_update_title) : getString(R.string.student_form_new_title)));
         setContentView(R.layout.activity_student_form);
         initViews();
+        retriveDataOfStudentToEdit();
     }
 
     @Override
@@ -54,9 +64,10 @@ public class StudentFormActivity extends AppCompatActivity {
         return getIntent().hasExtra(BUNDLE_STUDENT_TO_EDIT);
     }
 
-    private void setupBundles() {
-        if(getIntent().hasExtra(BUNDLE_STUDENT_TO_EDIT)) {
+    private void retriveDataOfStudentToEdit() {
+        if (getIntent().hasExtra(BUNDLE_STUDENT_TO_EDIT)) {
             studentToEdit = (Student) getIntent().getSerializableExtra(BUNDLE_STUDENT_TO_EDIT);
+            phonesOfstudentToEdit = phoneDao.getPhonesByStudent(studentToEdit.getId());
             setFieldsValuesBy(studentToEdit);
         }
     }
@@ -64,25 +75,48 @@ public class StudentFormActivity extends AppCompatActivity {
     private void setFieldsValuesBy(Student student) {
         nameEdt.setText(student.getName());
         emailEdt.setText(student.getEmail());
-        phoneEdt.setText(student.getPhone());
+        if (phonesOfstudentToEdit != null && phonesOfstudentToEdit.size() > 0) {
+            phoneEdt.setText(phonesOfstudentToEdit.get(0).getNumber());
+        }
     }
 
     private void initViews() {
         nameEdt = findViewById(R.id.activity_student_form_name_edt);
         phoneEdt = findViewById(R.id.activity_student_form_phone_etd);
         emailEdt = findViewById(R.id.activity_student_form_email_edt);
-
-        setupBundles();
     }
 
     private void finishForm() {
-        if(studentToEdit == null) {
-            studentDao.insert(new Student(getNameFieldValue(), getPhoneFieldValue(), getEmailFieldValue()));
-        } else  {
+        if (studentToEdit == null) {
+            // creating new student
+
+            final Student newStudent = new Student(getNameFieldValue(), getEmailFieldValue());
+
+            StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
+                newStudent.setId(studentDao.insert(newStudent));
+                Phone phone = new Phone(newStudent.getId(), PhoneType.UNKNOW, getPhoneFieldValue());
+                phoneDao.insert(phone);
+            });
+
+        } else {
+            // editing student
             studentToEdit.setEmail(getEmailFieldValue());
             studentToEdit.setName(getNameFieldValue());
-            studentToEdit.setPhone(getPhoneFieldValue());
-            studentDao.update(studentToEdit);
+
+            final Phone phone;
+            if (!phonesOfstudentToEdit.isEmpty()) {
+                phone = new Phone(studentToEdit.getId(), PhoneType.UNKNOW, getPhoneFieldValue());
+                phone.setMain(true);
+                phone.setId(phonesOfstudentToEdit.get(0).getId());
+            } else {
+                phone = null;
+            }
+
+            StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
+                studentDao.update(studentToEdit);
+                if (phone != null)
+                    phoneDao.insert(phone);
+            });
         }
         finish();
     }

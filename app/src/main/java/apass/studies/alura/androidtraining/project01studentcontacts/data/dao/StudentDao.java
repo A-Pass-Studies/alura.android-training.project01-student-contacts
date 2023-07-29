@@ -4,16 +4,18 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
 
 import apass.studies.alura.androidtraining.project01studentcontacts.model.Student;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.StudentWithMainPhone;
 
 @Dao
 public interface StudentDao {
     @Insert
-    void insert(Student student);
+    Long insert(Student student);
 
     @Update
     void update(Student student);
@@ -21,7 +23,8 @@ public interface StudentDao {
     @Delete
     void delete(Student student);
 
-    @Query("SELECT * FROM student")
-    List<Student> getAll();
+    @Transaction
+    @Query("SELECT * FROM Student")
+    List<StudentWithMainPhone> getStudentsWithMainPhone();
 
 }

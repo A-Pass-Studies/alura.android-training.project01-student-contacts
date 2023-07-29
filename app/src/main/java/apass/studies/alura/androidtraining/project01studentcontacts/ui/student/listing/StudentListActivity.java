@@ -18,6 +18,7 @@ import apass.studies.alura.androidtraining.project01studentcontacts.R;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.database.StudentContactsDatabase;
 import apass.studies.alura.androidtraining.project01studentcontacts.model.Student;
+import apass.studies.alura.androidtraining.project01studentcontacts.model.StudentWithMainPhone;
 import apass.studies.alura.androidtraining.project01studentcontacts.ui.student.StudentFormActivity;
 
 public class StudentListActivity extends AppCompatActivity {
@@ -39,7 +40,7 @@ public class StudentListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        studentListVwAdapter.update(studentDao.getAll());
+        studentListVwAdapter.update(studentDao.getStudentsWithMainPhone());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class StudentListActivity extends AppCompatActivity {
 
     private void setupRemoveConfirmationDialog(MenuItem item) {
         AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Student student = studentListVwAdapter.getItem(adapterInfo.position);
+        Student student = studentListVwAdapter.getItem(adapterInfo.position).student;
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_confirmation_of_remove_student_title)
                 .setMessage(getString(R.string.message_dialog_remove_student, student.getName()))
@@ -87,9 +88,10 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void onClickStudentItem(final AdapterView<?> adapterView, View view, final int position, final long id) {
+        final Student student = ((StudentWithMainPhone) adapterView.getItemAtPosition(position)).student;
         startActivity(
                 new Intent(this, StudentFormActivity.class)
-                        .putExtra(StudentFormActivity.BUNDLE_STUDENT_TO_EDIT, (Student) adapterView.getItemAtPosition(position)));
+                        .putExtra(StudentFormActivity.BUNDLE_STUDENT_TO_EDIT, student));
 
     }
 

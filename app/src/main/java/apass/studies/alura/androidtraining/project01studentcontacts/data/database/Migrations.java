@@ -52,9 +52,43 @@ final class Migrations {
                         "`email` TEXT," +
                         "`createdAt` INTEGER)");
                 db.execSQL("INSERT INTO StudentTmp(id, name, phone, email, createdAt)" +
-                        "SELECT id, name, phone, email, null FROM Student");
+                        "SELECT id, name, phone, email, CURRENT_TIMESTAMP FROM Student");
                 db.execSQL("DROP TABLE Student");
                 db.execSQL("ALTER TABLE StudentTmp RENAME TO Student");
+            }
+        };
+    }
+
+    static Migration migrate_00004_00005() {
+        return new Migration(4, 5) {
+            @Override
+            public void migrate(@NonNull SupportSQLiteDatabase db) {
+                db.execSQL("ALTER TABLE Student RENAME TO StudentOld");
+
+                db.execSQL("CREATE TABLE `Student` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`name` TEXT, " +
+                        "`email` TEXT," +
+                        "`createdAt` INTEGER);");
+
+                db.execSQL("INSERT INTO Student(id, name, email, createdAt)" +
+                        "SELECT id, name, email, createdAt " +
+                        "FROM StudentOld;");
+
+                db.execSQL("CREATE TABLE IF NOT EXISTS `Phone` (" +
+                        "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                        "`studentId` INTEGER NOT NULL, " +
+                        "`type` TEXT NOT NULL, " +
+                        "`number` TEXT NOT NULL, " +
+                        "`isMain` INTEGER NOT NULL DEFAULT 0, " +
+                        "CONSTRAINT `phone_student_fk` FOREIGN KEY(`studentId`) REFERENCES `Student`(`id`) " +
+                            "ON UPDATE NO ACTION ON DELETE NO ACTION);");
+
+                db.execSQL("INSERT INTO `Phone` (`id`, `studentId`, `type`, `number`, `isMain`) " +
+                        "SELECT null, id, 'UNKNOW', phone, 1 FROM `StudentOld`" +
+                        "ORDER BY id ASC;");
+
+                db.execSQL("DROP TABLE StudentOld");
             }
         };
     }
