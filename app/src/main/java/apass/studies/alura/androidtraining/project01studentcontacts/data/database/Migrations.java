@@ -82,7 +82,7 @@ final class Migrations {
                         "`number` TEXT NOT NULL, " +
                         "`isMain` INTEGER NOT NULL DEFAULT 0, " +
                         "CONSTRAINT `phone_student_fk` FOREIGN KEY(`studentId`) REFERENCES `Student`(`id`) " +
-                            "ON UPDATE NO ACTION ON DELETE NO ACTION);");
+                            "ON UPDATE CASCADE ON DELETE CASCADE);");
 
                 db.execSQL("INSERT INTO `Phone` (`id`, `studentId`, `type`, `number`, `isMain`) " +
                         "SELECT null, id, 'UNKNOW', phone, 1 FROM `StudentOld`" +

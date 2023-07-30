@@ -10,7 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Student.class, parentColumns = "id", childColumns = "studentId")
+        @ForeignKey(entity = Student.class,
+                parentColumns = "id",
+                childColumns = "studentId",
+                onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)
 })
 public final class Phone {
 

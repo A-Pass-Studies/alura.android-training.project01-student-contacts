@@ -59,13 +59,13 @@ public class StudentListActivity extends AppCompatActivity {
 
     private void setupRemoveConfirmationDialog(MenuItem item) {
         AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Student student = studentListVwAdapter.getItem(adapterInfo.position).student;
+        StudentWithMainPhone studentWithPhone = studentListVwAdapter.getItem(adapterInfo.position);
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_confirmation_of_remove_student_title)
-                .setMessage(getString(R.string.message_dialog_remove_student, student.getName()))
+                .setMessage(getString(R.string.message_dialog_remove_student, studentWithPhone.student.getName()))
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    studentDao.delete(student);
-                    studentListVwAdapter.remove(student);
+                    studentDao.delete(studentWithPhone.student);
+                    studentListVwAdapter.remove(studentWithPhone);
                 })
                 .setNegativeButton(R.string.not, null).create();
         dialog.show();
