@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
+import apass.studies.alura.androidtraining.project01studentcontacts.App;
 import apass.studies.alura.androidtraining.project01studentcontacts.R;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.PhoneDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
@@ -67,8 +68,12 @@ public class StudentFormActivity extends AppCompatActivity {
     private void retriveDataOfStudentToEdit() {
         if (getIntent().hasExtra(BUNDLE_STUDENT_TO_EDIT)) {
             studentToEdit = (Student) getIntent().getSerializableExtra(BUNDLE_STUDENT_TO_EDIT);
-            phonesOfstudentToEdit = phoneDao.getPhonesByStudent(studentToEdit.getId());
-            setFieldsValuesBy(studentToEdit);
+            ((App)getApplication()).getExecutorService().execute(() -> {
+                phonesOfstudentToEdit = phoneDao.getPhonesByStudent(studentToEdit.getId());
+                ((App)getApplication()).getMainThreadHandler().post(() -> {
+                    setFieldsValuesBy(studentToEdit);
+                });
+            });
         }
     }
 
@@ -92,10 +97,15 @@ public class StudentFormActivity extends AppCompatActivity {
 
             final Student newStudent = new Student(getNameFieldValue(), getEmailFieldValue());
 
-            StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
-                newStudent.setId(studentDao.insert(newStudent));
-                Phone phone = new Phone(newStudent.getId(), PhoneType.UNKNOW, getPhoneFieldValue());
-                phoneDao.insert(phone);
+            ((App)getApplication()).getExecutorService().execute(() -> {
+                StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
+                    newStudent.setId(studentDao.insert(newStudent));
+                    Phone phone = new Phone(newStudent.getId(), PhoneType.UNKNOW, getPhoneFieldValue());
+                    phoneDao.insert(phone);
+                    ((App)getApplication()).getMainThreadHandler().post(() -> {
+                        finish();
+                    });
+                });
             });
 
         } else {
@@ -112,13 +122,17 @@ public class StudentFormActivity extends AppCompatActivity {
                 phone = null;
             }
 
-            StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
-                studentDao.update(studentToEdit);
-                if (phone != null)
-                    phoneDao.insert(phone);
+            ((App)getApplication()).getExecutorService().execute(() -> {
+                StudentContactsDatabase.getInstance(this).runInTransaction(() -> {
+                    studentDao.update(studentToEdit);
+                    if (phone != null)
+                        phoneDao.insert(phone);
+                });
+                ((App)getApplication()).getMainThreadHandler().post(() -> {
+                    finish();
+                });
             });
         }
-        finish();
     }
 
     @NonNull

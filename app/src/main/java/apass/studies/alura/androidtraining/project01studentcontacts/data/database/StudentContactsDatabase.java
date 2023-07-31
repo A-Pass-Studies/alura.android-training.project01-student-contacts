@@ -34,7 +34,6 @@ public abstract class StudentContactsDatabase extends RoomDatabase {
     public static StudentContactsDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context, StudentContactsDatabase.class, "project01studentcontacts")
-                    .allowMainThreadQueries() // TODO: remove, implement async
                     .addMigrations(
                             migrate_00001_00002(),
                             migrate_00002_00003(),

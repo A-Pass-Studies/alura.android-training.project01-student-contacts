@@ -3,6 +3,7 @@ package apass.studies.alura.androidtraining.project01studentcontacts.ui.student.
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+import apass.studies.alura.androidtraining.project01studentcontacts.App;
 import apass.studies.alura.androidtraining.project01studentcontacts.R;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.dao.StudentDao;
 import apass.studies.alura.androidtraining.project01studentcontacts.data.database.StudentContactsDatabase;
@@ -27,9 +32,19 @@ public class StudentListActivity extends AppCompatActivity {
 
     private StudentListAdapter studentListVwAdapter;
 
+
+    private Handler mainThreadHandler;
+
+    private ExecutorService defaultExecutorService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        {
+            final App app = (App) getApplicationContext();
+            mainThreadHandler = app.getMainThreadHandler();
+            defaultExecutorService = app.getExecutorService();
+        }
         setTitle(getString(R.string.activity_student_listing_title));
         setContentView(R.layout.activity_student_listing);
 
@@ -40,7 +55,13 @@ public class StudentListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        studentListVwAdapter.update(studentDao.getStudentsWithMainPhone());
+
+        defaultExecutorService.execute(() -> {
+            List<StudentWithMainPhone> studentsWithMainPhone = studentDao.getStudentsWithMainPhone();
+            mainThreadHandler.post(() -> {
+                studentListVwAdapter.update(studentsWithMainPhone);
+            });
+        });
     }
 
     @Override
@@ -57,15 +78,24 @@ public class StudentListActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
+    private void removeStudentWithPhone(StudentWithMainPhone studentWithMainPhone) {
+        final Handler mainThreadHandler = this.mainThreadHandler;
+        defaultExecutorService.execute(() -> {
+            studentDao.delete(studentWithMainPhone.student);
+            mainThreadHandler.post(() -> {
+                studentListVwAdapter.remove(studentWithMainPhone);
+            });
+        });
+    }
+
     private void setupRemoveConfirmationDialog(MenuItem item) {
         AdapterView.AdapterContextMenuInfo adapterInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        StudentWithMainPhone studentWithPhone = studentListVwAdapter.getItem(adapterInfo.position);
+        final StudentWithMainPhone studentWithPhone = studentListVwAdapter.getItem(adapterInfo.position);
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_confirmation_of_remove_student_title)
                 .setMessage(getString(R.string.message_dialog_remove_student, studentWithPhone.student.getName()))
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    studentDao.delete(studentWithPhone.student);
-                    studentListVwAdapter.remove(studentWithPhone);
+                    removeStudentWithPhone(studentWithPhone);
                 })
                 .setNegativeButton(R.string.not, null).create();
         dialog.show();
